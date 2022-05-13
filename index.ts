@@ -10,9 +10,10 @@ app.use(cors({
 app.use(json());
 
 // Routers ...
-app.get('/', (req :Request,res: Response)=>{
-throw new ValidationError('Daamn');
-})
+// app.get('/', (req :Request,res: Response)=>{
+// throw new ValidationError('Daamn');
+// })
+
 app.use(handleError);
 app.listen(3001, '0.0.0.0',()=>{
     console.log('Listening on port http://localhost:3001...');
