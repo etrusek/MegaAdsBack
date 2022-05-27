@@ -47,21 +47,22 @@ export class AdRecord implements AdEntity {
 
     static async findAll(name: string): Promise<SimpleAdEntity[] | null> {
         const [results] = await pool.execute("SELECT * FROM `ads` WHERE name LIKE  :search", {
-            search: `%${name}%`,
+            search: `%${name === null ? "" : name}%`,
         }) as AdRecordResults;
         return results.length > 0 ? results.map(result => {
             const {id, lat, lon} = result;
             return {
                 id, lat, lon
             }
-        }) : null;
+        }) : [];
     }
-     async insert(): Promise<void>{
-        if(!this.id){
+
+    async insert(): Promise<void> {
+        if (!this.id) {
             this.id = uuid();
         } else {
             throw new Error('cannot insert something that is already inserted')
         }
         await pool.execute("INSERT INTO `ads`(`id`,`name`,`description`, `price`,`url`, `lat`, `lon`) VALUES(:id, :name, :description, :price,:url,:lat,:lon)", this);
-     }
+    }
 }
