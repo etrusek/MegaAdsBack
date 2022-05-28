@@ -1,7 +1,7 @@
 import {AdRecord} from "../records/ad.record";
 import {pool} from "../utils/db";
 
-afterAll(async ()=>{
+afterAll(async () => {
     await pool.end();
 });
 
@@ -35,16 +35,16 @@ test('AdRecord.findAll returns array of found entries when searching for "a"', a
     expect(ad).not.toEqual([]);
     expect(ad[0].id).toBeDefined();
 })
-test('AdRecord.findAll returns empty array of found entries when srarching for "x"', async () => {
+test('AdRecord.findAll returns empty array of found entries when searching for "x"', async () => {
     const ad = await AdRecord.findAll('x');
-    expect(ad).toBeNull();
+    expect(Array.isArray(ad)).toBe(true);
 })
 
 test('AdRecord.insert returns new UUID', async () => {
-        const ad = new AdRecord(defaultObj);
+    const ad = new AdRecord(defaultObj);
     await ad.insert();
     expect(ad.id).toBeDefined();
-    expect(typeof ad.id). toBe('string');
+    expect(typeof ad.id).toBe('string');
 })
 test('AdRecord.insert inserts data to database', async () => {
 
